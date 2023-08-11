@@ -127,3 +127,12 @@ pub fn run_next_app() -> ! {
     }
     panic!("Unreachable in batch::run_current_app!");
 }
+
+pub fn is_good_address(buf:usize, len:usize) -> usize{
+    // 4096 is assigned at the document
+    if (((buf as usize)  > USER_STACK.get_sp() - 4096) && ((buf as usize) + len <= USER_STACK.get_sp())) 
+    || (((buf as usize) + len <= APP_SIZE_LIMIT + APP_BASE_ADDRESS) && ((buf as usize) >= APP_BASE_ADDRESS)){
+        return 0;
+    }
+    return 1;
+}
